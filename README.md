@@ -1,5 +1,5 @@
 # OAuth2-GitHub-App-Login
-Using GitHub OAuth2 for Login instead of any database
+Using GitHub OAuth2 for Login 
 
 
 ### 1. Configure HomeURL and CallbackURL in your GitHub App
