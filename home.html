@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Welcome to Our World</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+     <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+
+<body style="background-color: lightblue;">
+  <div  id="name">
+    <h3></h3>
+  </div>  
+    <div class="text-center">
+       <h3>GitHub User Details</h3>
+       <div class="container-fluid" id="details1">
+          <h3>Name :</h3>  <input type ="text" value="" id="name1"> <br>
+          <h3>ID :</h3>  <input type ="text" value="" id="GID"> <br>
+          <h3>Node-ID :</h3>  <input type ="text" value="" id="NID"> <br>
+          <h3>URL :</h3>  <input type ="text" value="" id="URL"> <br>
+
+        </div>  
+        <div id="details">
+            <h3>Personal Details: </h3>
+        </div> 
+    </div>
+</body>
+<script>
+        
+        //Get the Access token from the query params
+        const query = window.location.search.substring(1);
+        const token = query.split('access_token=')[1]
+
+        console.log("Token retrieved from Home : " + token);
+
+        //Call the user info API
+        fetch('https://api.github.com/user',{
+            headers: {
+				// Include the token in the Authorization header
+				Authorization: `token ${token}`
+            }
+        })
+        .then(res => res.json())
+        .then(res=>{
+             console.log("Name: "+ res.login);
+             document.getElementById('name1').value = res.login;
+             document.getElementById('GID').value = res.id;
+             document.getElementById('NID').value = res.node_id;
+             document.getElementById('URL').value = res.url;
+
+             var $log = $( "#details" ),
+               str = "Hello, My name is : <b>"+ res.login + "</b>",
+               html = $.parseHTML( str );
+                
+             var $name = $("#name"),
+               str1="Welcome <b>"+ res.login +"</b>",
+               html1 = $.parseHTML(str1);
+
+             // Append the parsed HTML
+             $log.append( html );
+             $name.append(html1);
+ 
+        })
+
+</script>
